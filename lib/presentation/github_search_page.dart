@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:github_api/common/my_color_style.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:github_api/presentation/component/repo_list_view.dart';
 
-class GithubSearchPage extends StatelessWidget {
+import '../common/my_color_style.dart';
+import '../provider/provider.dart';
+import '../repository/searchUser.dart';
+
+class GithubSearchPage extends ConsumerWidget {
   const GithubSearchPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -38,13 +43,12 @@ class GithubSearchPage extends StatelessWidget {
                   width: screenSize.width * 0.9,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: MyColorStyle.backgroundScaffoldColor,
                       borderRadius: BorderRadius.circular(14),
+                      color: MyColorStyle.backgroundScaffoldColor,
                     ),
                     child: SizedBox(
                       child: Center(
                         child: TextFormField(
-                          onChanged: (text) {},
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: 'repository',
@@ -61,6 +65,16 @@ class GithubSearchPage extends StatelessWidget {
                             ),
                             fillColor: MyColorStyle.backgroundScaffoldColor,
                           ),
+                          onChanged: (text) async {
+                            ref
+                                .watch(searchWordProvider.notifier)
+                                .update((state) => state = text);
+                            final users =
+                                await ref.watch(searchUsersProvider.future);
+                            ref
+                                .watch(userProvider.notifier)
+                                .update((state) => state = users);
+                          },
                         ),
                       ),
                     ),
@@ -71,6 +85,7 @@ class GithubSearchPage extends StatelessWidget {
           ],
         ),
       ),
+      body: const RepoListView(),
     );
   }
 }
