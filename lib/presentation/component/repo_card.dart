@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:github_api/model/github_user.dart';
+import 'package:github_api/model/repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RepoCard extends StatelessWidget {
   const RepoCard({
     super.key,
-    required this.user,
+    required this.repo,
   });
-  final GithubUser user;
+  final Repo repo;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final url = Uri.parse(user.htmlUrl);
+        final url = Uri.parse(repo.htmlUrl);
         if (await canLaunchUrl(url)) {
           launchUrl(url);
         }
@@ -23,9 +23,9 @@ class RepoCard extends StatelessWidget {
             Container(
               height: 50,
               padding: const EdgeInsets.all(8.0),
-              child: Image.network(user.avatarUrl),
+              child: Image.network(repo.avatarUrl),
             ),
-            Text(user.login)
+            Text(repo.fullName)
           ],
         ),
       ),

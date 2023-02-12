@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:github_api/repository/repo_state_notifier.dart';
 
-import '../../provider/provider.dart';
 import 'repo_card.dart';
 
 class RepoListView extends ConsumerWidget {
@@ -11,15 +11,15 @@ class RepoListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final users = ref.watch(userProvider);
+    final repos = ref.watch(reposStateProvider);
     return Center(
       child: ListView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.all(8),
-        itemCount: users.length,
+        itemCount: repos.length,
         itemBuilder: (BuildContext context, int index) {
-          final user = users[index];
-          return RepoCard(user: user);
+          final repo = repos[index];
+          return RepoCard(repo: repo);
         },
       ),
     );

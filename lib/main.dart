@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'GithubAPI',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const GithubSearchPage(),
+      home: GithubSearchPage(),
     );
   }
 }

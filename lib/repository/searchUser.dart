@@ -11,9 +11,9 @@ final searchUsersProvider = FutureProvider<List<GithubUser>>((ref) async {
     try {
       final http.Response response;
 
-      response = await http.get(Uri.https('api.github.com', '/search/users', {
+      response =
+          await http.get(Uri.https('api.github.com', '/search/repositories', {
         'q': searchWord,
-        'sort': 'followers',
       }));
       switch (response.statusCode) {
         case 200:

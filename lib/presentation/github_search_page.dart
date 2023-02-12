@@ -3,15 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_api/presentation/component/repo_list_view.dart';
 
 import '../common/my_color_style.dart';
-import '../provider/provider.dart';
-import '../repository/searchUser.dart';
+import '../model/repo.dart';
+import '../repository/repo_state_notifier.dart';
 
 class GithubSearchPage extends ConsumerWidget {
-  const GithubSearchPage({super.key});
-
+  GithubSearchPage({super.key});
+  List<Repo>? state;
+  ReposStateNotifier? notifier;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenSize = MediaQuery.of(context).size;
+    state = ref.watch(reposStateProvider);
+    notifier = ref.watch(reposStateProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 150,
@@ -65,15 +68,8 @@ class GithubSearchPage extends ConsumerWidget {
                             ),
                             fillColor: MyColorStyle.backgroundScaffoldColor,
                           ),
-                          onChanged: (text) async {
-                            ref
-                                .watch(searchWordProvider.notifier)
-                                .update((state) => state = text);
-                            final users =
-                                await ref.watch(searchUsersProvider.future);
-                            ref
-                                .watch(userProvider.notifier)
-                                .update((state) => state = users);
+                          onFieldSubmitted: (text) {
+                            notifier!.fetchList(text);
                           },
                         ),
                       ),
