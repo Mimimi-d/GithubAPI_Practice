@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_api/presentation/component/repo_list_view.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../common/my_color_style.dart';
 import '../model/repo.dart';
 import '../repository/repo_state_notifier.dart';
@@ -52,17 +52,17 @@ class GithubSearchPage extends ConsumerWidget {
                     child: SizedBox(
                       child: Center(
                         child: TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'repository',
-                            hintStyle: TextStyle(
+                            hintText: AppLocalizations.of(context)!.test,
+                            hintStyle: const TextStyle(
                               color: MyColorStyle.hintTextColor,
                             ),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.search,
                               color: Color(0xff668CEA),
                             ),
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.clear,
                               color: Color(0xff668CEA),
                             ),
